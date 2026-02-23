@@ -4,29 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro | Comunidad Hatzolas Yisroel</title>
-    <!-- Use Inter font & Playfair Display -->
+    <title>Registro | Comunidad Kehilah Hatzolat Israel</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            /* Hatzalah Core Colors (from Design Kit) */
-            --primary: #667999;
-            --accent: #102241;
+            --primary: #7A2048;
+            /* Burgundy */
+            --accent: #D4AF37;
+            /* Gold */
             --background: #FAFAFA;
             --surface: #ffffff;
-            --text-main: #102241;
-            --link: #102241;
-            --text-light: #667999;
+            --text-main: #2D3748;
+            --text-light: #7A2048;
             --border: #e2e8f0;
             --error: #e53e3e;
-            --success: #38a169;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            font-size: 12px;
+            font-size: 14px;
             background-color: var(--background);
             color: var(--text-main);
             margin: 0;
@@ -43,7 +41,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             width: 100%;
-            max-width: 550px;
+            max-width: 650px;
             margin: 20px;
         }
 
@@ -55,9 +53,9 @@
         }
 
         .header h1 {
-            color: var(--accent);
+            color: var(--primary);
             font-family: 'Playfair Display', serif;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 700;
             margin: 0 0 0.5rem 0;
         }
@@ -65,7 +63,7 @@
         .header p {
             color: var(--primary);
             margin: 0;
-            font-size: 12px;
+            font-size: 13px;
         }
 
         /* Progress Bar */
@@ -80,19 +78,19 @@
 
         .progress-bar {
             height: 100%;
-            background-color: var(--primary);
-            width: 25%;
-            /* Start at 25% for 4 steps */
+            background-color: var(--accent);
+            width: 16.6%;
+            /* Start at 1/6 for 6 steps */
             transition: width 0.3s ease;
         }
 
         .step-indicator {
             text-align: right;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--primary);
             margin-top: -1.5rem;
             margin-bottom: 2rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* Form Steps */
@@ -118,9 +116,9 @@
         }
 
         .step-title {
-            color: var(--accent);
+            color: var(--primary);
             font-family: 'Playfair Display', serif;
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 600;
             margin-bottom: 1.5rem;
         }
@@ -132,18 +130,19 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--accent);
-            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 13px;
         }
 
         input,
-        select {
+        select,
+        textarea {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid var(--border);
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 13px;
             font-family: inherit;
             transition: all 0.2s ease;
             box-sizing: border-box;
@@ -151,16 +150,22 @@
             color: var(--text-main);
         }
 
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
         input:focus,
-        select:focus {
+        select:focus,
+        textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+            box-shadow: 0 0 0 3px rgba(122, 32, 72, 0.1);
         }
 
         .radio-group {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-top: 0.5rem;
         }
 
@@ -169,11 +174,34 @@
             align-items: center;
             font-weight: normal;
             cursor: pointer;
+            color: var(--text-main);
         }
 
         .radio-label input {
             width: auto;
             margin-right: 0.5rem;
+        }
+
+        .rules-box {
+            background-color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-main);
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .rules-box ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .rules-box li {
+            margin-bottom: 0.5rem;
         }
 
         .btn-group {
@@ -186,11 +214,12 @@
         button {
             padding: 0.85rem 1.5rem;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
             border: none;
+            font-family: 'Inter', sans-serif;
         }
 
         .btn-primary {
@@ -200,12 +229,12 @@
         }
 
         .btn-primary:hover {
-            background-color: var(--accent);
+            background-color: #5a1735;
         }
 
         .btn-secondary {
             background-color: white;
-            color: var(--accent);
+            color: var(--primary);
             border: 1px solid var(--border);
         }
 
@@ -215,22 +244,21 @@
 
         .btn-submit {
             background-color: var(--accent);
-            color: white;
+            color: var(--primary);
             flex-grow: 1;
         }
 
         .btn-submit:hover {
-            background-color: #0b182d;
+            background-color: #b5952f;
         }
 
-        /* Loading animation */
         .spinner {
             display: none;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(122, 32, 72, 0.3);
             border-radius: 50%;
-            border-top-color: white;
+            border-top-color: var(--primary);
             animation: spin 1s linear infinite;
             margin: 0 auto;
         }
@@ -247,46 +275,38 @@
 
     <div class="container">
         <div class="header">
-            <h1>Registro Comunitario</h1>
-            <p>Hatzolas Yisroel • Formulario Oficial</p>
+            <h1>Formulario y Estatutos Miembros Nuevos Comunidad</h1>
+            <p>La finalidad de este formulario es registrar y actualizar datos de los miembros que hacen parte de la
+                comunidad Kehilah Hatzolat Israel.</p>
         </div>
 
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
-        <div class="step-indicator" id="stepIndicator">Paso 1 de 4</div>
+        <div class="step-indicator" id="stepIndicator">Paso 1 de 6</div>
 
-        <!-- The form -->
         <form id="onboardingForm">
 
-            <!-- STEP 1: Identificación y Contacto -->
+            <!-- STEP 1: Consentimiento -->
             <div class="form-step active" id="step1">
-                <div class="step-title">1. Identificación y Contacto</div>
+                <div class="step-title">1. Consentimiento</div>
 
-                <div class="form-group">
-                    <label for="fullName">Nombre Completo *</label>
-                    <input type="text" id="fullName" name="fullName" placeholder="Nombres y Apellidos completos"
-                        required>
+                <div class="rules-box">
+                    <strong>Autorización de Tratamiento de Datos Personales</strong><br><br>
+                    De conformidad con la Ley 1581 de 2012 y el Decreto 1377 de 2013 de Colombia, autorizo expresamente
+                    a la comunidad Kehilah Hatzolat Israel para recopilar, almacenar y tratar mis datos personales con
+                    el fin de gestionar mi membresía, comunicaciones y actividades dentro de la comunidad. Declaro
+                    conocer que puedo ejercer mis derechos de acceso, rectificación, actualización y supresión de mis
+                    datos conforme a la legislación vigente, a través de los canales dispuestos por la comunidad.
                 </div>
 
                 <div class="form-group">
-                    <label for="idNumber">Número de Identificación (C.C. / Pasaporte) *</label>
-                    <input type="text" id="idNumber" name="idNumber" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="birthDate">Fecha de Nacimiento *</label>
-                    <input type="date" id="birthDate" name="birthDate" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Número de Teléfono / WhatsApp *</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+57 300 000 0000" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Dirección de correo electrónico *</label>
-                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                    <label>1. Acepto el tratamiento de mis datos *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="acepta_datos" value="Si" required>
+                            Si</label>
+                        <label class="radio-label"><input type="radio" name="acepta_datos" value="No"> No</label>
+                    </div>
                 </div>
 
                 <div class="btn-group" style="justify-content: flex-end;">
@@ -294,23 +314,73 @@
                 </div>
             </div>
 
-            <!-- STEP 2: Residencia y Demografía -->
+            <!-- STEP 2: Datos Personales -->
             <div class="form-step" id="step2">
-                <div class="step-title">2. Residencia y Demografía</div>
+                <div class="step-title">2. Datos Personales</div>
 
                 <div class="form-group">
-                    <label for="address">Dirección de Residencia Actual *</label>
-                    <input type="text" id="address" name="address" placeholder="Ej. Calle 123 # 45-67 apt 101" required>
+                    <label>2. Nombre Completo *</label>
+                    <input type="text" name="nombre_completo" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="neighborhood">Barrio / Localidad *</label>
-                    <input type="text" id="neighborhood" name="neighborhood" required>
+                    <label>3. Numero de Identificación *</label>
+                    <input type="text" name="identificacion" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="civilStatus">Estado Civil *</label>
-                    <select id="civilStatus" name="civilStatus" required>
+                    <label>4. Número de teléfono *</label>
+                    <input type="tel" name="telefono" required>
+                </div>
+
+                <div class="form-group">
+                    <label>5. Dirección de correo electrónico *</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>6. Fecha de Nacimiento *</label>
+                    <input type="date" name="fecha_nacimiento" required>
+                </div>
+
+                <div class="form-group">
+                    <label>7. ¿Tiene alguna condición médica que se deba tener en cuenta? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="tiene_condicion_medica" value="Si" required
+                                onchange="toggleField('req_condicion', true)"> Si</label>
+                        <label class="radio-label"><input type="radio" name="tiene_condicion_medica" value="No"
+                                onchange="toggleField('req_condicion', false)"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="req_condicion" style="display: none;">
+                    <label>8. Si su anterior respuesta fue SI, favor especifique de que tipo.</label>
+                    <input type="text" name="condicion_medica_detalle">
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-secondary" onclick="prevStep(2)">⟵ Atrás</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(2)">Siguiente ➞</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Residencia y Demografía -->
+            <div class="form-step" id="step3">
+                <div class="step-title">3. Residencia y Demografía</div>
+
+                <div class="form-group">
+                    <label>9. Dirección de Residencia (incluir ciudad y barrio) *</label>
+                    <input type="text" name="direccion" required>
+                </div>
+
+                <div class="form-group">
+                    <label>10. País *</label>
+                    <input type="text" name="pais" required>
+                </div>
+
+                <div class="form-group">
+                    <label>11. Seleccione su estado civil actual *</label>
+                    <select name="estado_civil" required>
                         <option value="" disabled selected>Seleccione...</option>
                         <option value="Soltero/a">Soltero/a</option>
                         <option value="Casado/a">Casado/a</option>
@@ -321,18 +391,38 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="housingType">Tipo de Vivienda Actual *</label>
-                    <select id="housingType" name="housingType" required>
+                    <label>12. ¿Tiene Hijos? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="tiene_hijos" value="Si" required
+                                onchange="toggleField('req_hijos', true)"> Si</label>
+                        <label class="radio-label"><input type="radio" name="tiene_hijos" value="No"
+                                onchange="toggleField('req_hijos', false)"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="req_hijos" style="display: none;">
+                    <label>13. ¿Cuantos?</label>
+                    <input type="number" name="cantidad_hijos" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>14. ¿Cuántas personas tiene a cargo? *</label>
+                    <input type="number" name="personas_cargo" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>15. Seleccione el tipo de vivienda actual *</label>
+                    <select name="tipo_vivienda" required>
                         <option value="" disabled selected>Seleccione...</option>
                         <option value="Propia">Propia</option>
                         <option value="Arrendada">Arrendada</option>
-                        <option value="Familiar">Familiar (Vive con familiares)</option>
+                        <option value="Familiar">Familiar</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="estrato">Estrato *</label>
-                    <select id="estrato" name="estrato" required>
+                    <label>16. Selecciona el Estrato *</label>
+                    <select name="estrato" required>
                         <option value="" disabled selected>Seleccione...</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -344,81 +434,189 @@
                 </div>
 
                 <div class="btn-group">
-                    <button type="button" class="btn-secondary" onclick="prevStep(2)">⟵ Atrás</button>
-                    <button type="button" class="btn-primary" onclick="nextStep(2)">Siguiente ➞</button>
-                </div>
-            </div>
-
-            <!-- STEP 3: Información Médica y Emergencias -->
-            <div class="form-step" id="step3">
-                <div class="step-title">3. Médica y Emergencia</div>
-
-                <div class="form-group">
-                    <label>¿Tiene alguna condición médica que debamos conocer? *</label>
-                    <div class="radio-group">
-                        <label class="radio-label"><input type="radio" name="hasMedicalCondition" value="Si" required>
-                            Sí</label>
-                        <label class="radio-label"><input type="radio" name="hasMedicalCondition" value="No"> No</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="medicalDetails">Si respondió sí, especifique la condición médica</label>
-                    <input type="text" id="medicalDetails" name="medicalDetails"
-                        placeholder="Ej. Alergia a medicamentos, asma, etc.">
-                </div>
-
-                <div class="form-group">
-                    <label for="eps">EPS / Sistema de Salud</label>
-                    <input type="text" id="eps" name="eps" placeholder="Nombre de su entidad de salud">
-                </div>
-
-                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 1.5rem 0;">
-
-                <div class="form-group">
-                    <label for="emergencyName">Nombre del Contacto de Emergencia *</label>
-                    <input type="text" id="emergencyName" name="emergencyName" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="emergencyPhone">Teléfono del Contacto de Emergencia *</label>
-                    <input type="tel" id="emergencyPhone" name="emergencyPhone" required>
-                </div>
-
-                <div class="btn-group">
                     <button type="button" class="btn-secondary" onclick="prevStep(3)">⟵ Atrás</button>
                     <button type="button" class="btn-primary" onclick="nextStep(3)">Siguiente ➞</button>
                 </div>
             </div>
 
-            <!-- STEP 4: Ocupación y Confirmación -->
+            <!-- STEP 4: Laboral -->
             <div class="form-step" id="step4">
-                <div class="step-title">4. Ocupación y Finalización</div>
+                <div class="step-title">4. Laboral y Oportunidades</div>
 
                 <div class="form-group">
-                    <label for="occupation">Ocupación o Profesión *</label>
-                    <input type="text" id="occupation" name="occupation" required>
+                    <label>17. Estaría dispuesto a pagar una membresía? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="paga_membresia" value="Si" required>
+                            Si</label>
+                        <label class="radio-label"><input type="radio" name="paga_membresia" value="No"> No</label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="company">Empresa o Lugar de Trabajo</label>
-                    <input type="text" id="company" name="company">
+                    <label>18. Se encuentra trabajando actualmente? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="trabaja" value="Si" required> Si</label>
+                        <label class="radio-label"><input type="radio" name="trabaja" value="No"> No</label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="children">Número de hijos</label>
-                    <input type="number" id="children" name="children" min="0" placeholder="0">
+                    <label>19. Profesión u Ocupación *</label>
+                    <input type="text" name="profesion" required>
                 </div>
 
-                <div
-                    style="background-color: #ebf8ff; border: 1px solid #bee3f8; padding: 1rem; border-radius: 6px; margin-top: 1.5rem; font-size: 0.85rem; color: #2c5282;">
-                    <strong>Privacidad de Datos:</strong> Al enviar este formulario, usted autoriza a la congregación
-                    Hatzolas Yisroel para el almacenamiento y trato confidencial de su información con fines
-                    estrictamente comunitarios y de contacto.
+                <div class="form-group">
+                    <label>¿Cuáles son sus habilidades y talentos principales?</label>
+                    <textarea name="talentos"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>¿Estaría interesado en recibir oportunidades laborales de la comunidad?</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="interes_laboral" value="Si"> Si</label>
+                        <label class="radio-label"><input type="radio" name="interes_laboral" value="No"> No</label>
+                    </div>
                 </div>
 
                 <div class="btn-group">
                     <button type="button" class="btn-secondary" onclick="prevStep(4)">⟵ Atrás</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(4)">Siguiente ➞</button>
+                </div>
+            </div>
+
+            <!-- STEP 5: Información General -->
+            <div class="form-step" id="step5">
+                <div class="step-title">5. Información General</div>
+
+                <div class="form-group">
+                    <label>21. ¿Proviene de alguna corriente religiosa? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="corriente_religiosa" value="Si" required
+                                onchange="toggleField('req_corriente', true)"> Si</label>
+                        <label class="radio-label"><input type="radio" name="corriente_religiosa" value="No"
+                                onchange="toggleField('req_corriente', false)"> No</label>
+                    </div>
+                </div>
+                <div class="form-group" id="req_corriente" style="display: none;">
+                    <label>22. Si su anterior respuesta fue SI, favor especifique de cual.</label>
+                    <input type="text" name="corriente_detalle">
+                </div>
+
+                <div class="form-group">
+                    <label>23. ¿Has recibido alguna educación en Leyes y Costumbres de Judaísmo? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="educacion_judia" value="Si" required
+                                onchange="toggleField('req_educacion', true)"> Si</label>
+                        <label class="radio-label"><input type="radio" name="educacion_judia" value="No"
+                                onchange="toggleField('req_educacion', false)"> No</label>
+                    </div>
+                </div>
+                <div class="form-group" id="req_educacion" style="display: none;">
+                    <label>24. Si su anterior respuesta fue SI, favor especifique de que tipo.</label>
+                    <input type="text" name="educacion_detalle">
+                </div>
+
+                <div class="form-group">
+                    <label>25. ¿Tiene usted libros para educarse en los Leyes y Costumbres de Judaísmo? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="tiene_libros" value="Si" required
+                                onchange="toggleField('req_libros', true)"> Si</label>
+                        <label class="radio-label"><input type="radio" name="tiene_libros" value="No"
+                                onchange="toggleField('req_libros', false)"> No</label>
+                    </div>
+                </div>
+                <div class="form-group" id="req_libros" style="display: none;">
+                    <label>26. Si su anterior respuesta fue SI, favor especifique de que tipo.</label>
+                    <input type="text" name="libros_detalle">
+                </div>
+
+                <div class="form-group">
+                    <label>27. ¿Ha tenido o tiene algún proceso judicial de orden civil o penal? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="proceso_judicial" value="Si" required
+                                onchange="toggleField('req_judicial', true)"> Si</label>
+                        <label class="radio-label"><input type="radio" name="proceso_judicial" value="No"
+                                onchange="toggleField('req_judicial', false)"> No</label>
+                    </div>
+                </div>
+                <div class="form-group" id="req_judicial" style="display: none;">
+                    <label>28. Si la anterior respuesta fue SI favor especifique</label>
+                    <input type="text" name="judicial_detalle">
+                </div>
+
+                <div class="form-group">
+                    <label>29. ¿Conoce a alguna persona judía o a un rabino que pueda dar referencias de usted?
+                        *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="conoce_rabino" value="Si" required
+                                onchange="toggleField('req_rabino', true)"> Si</label>
+                        <label class="radio-label"><input type="radio" name="conoce_rabino" value="No"
+                                onchange="toggleField('req_rabino', false)"> No</label>
+                    </div>
+                </div>
+                <div class="form-group" id="req_rabino" style="display: none;">
+                    <label>30. Si su anterior respuesta fue SI, favor especifique de que tipo.</label>
+                    <input type="text" name="rabino_detalle">
+                </div>
+
+
+                <div class="btn-group">
+                    <button type="button" class="btn-secondary" onclick="prevStep(5)">⟵ Atrás</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(5)">Siguiente ➞</button>
+                </div>
+            </div>
+
+            <!-- STEP 6: Estatutos -->
+            <div class="form-step" id="step6">
+                <div class="step-title">6. Estatutos y Compromisos</div>
+
+                <p style="font-size: 13px; margin-bottom: 10px;">Por favor, lea atentamente cada numeral a continuación,
+                    ya que este reglamento establece las normas que rigen la comunidad.</p>
+
+                <div class="rules-box">
+                    <ul>
+                        <li><strong>Evaluación de membresía:</strong> La membresía será evaluada cada tres meses y su
+                            continuidad dependerá del cumplimiento de los requisitos. Hombres: Asistir puntuales a
+                            Shajarit, Minja, Arbit y Shabat.</li>
+                        <li><strong>Pago de membresía:</strong> No atrasarse más de un mes en el pago.</li>
+                        <li><strong>Convivencia:</strong> Evitar palabras y actitudes que no construyan.</li>
+                        <li><strong>Participación:</strong> Asistir a clases, eventos y festividades comunitarias.</li>
+                        <li><strong>Estudio y formación:</strong> Leer los libros estipulados y presentar los exámenes.
+                        </li>
+                        <li><strong>Vestimenta adecuada en la sinagoga:</strong> Mujeres: Faldas largas y sin escote.
+                            Hombres: No pantalones cortos o jeans rotos.</li>
+                        <li><strong>Respeto en los rezos:</strong> Los niños no deben hacer ruido.</li>
+                        <li><strong>Creencias religiosas:</strong> No se permite la creencia en Jesús, Y´shua o el
+                            mesianismo.</li>
+                        <li><strong>Visitas a la comunidad:</strong> Se debe contar con la autorización del Rabino.</li>
+                        <li><strong>Respeto a la comunidad:</strong> No hablar mal del Rabino o los miembros de la
+                            comunidad.</li>
+                        <li><strong>Proceso de conversión:</strong> Se requiere asistir a los rezos y clases sin fallar
+                            durante un año.</li>
+                        <li><strong>Normas financieras:</strong> La comunidad es sin animo de lucro, no otorga
+                            préstamos.</li>
+                        <li><strong>Normas de conducta:</strong> Se suspenderá la membresía por faltas graves (robo,
+                            lashón hará, adulterio, peleas). Solteros deben seguir el proceso de shiduj. No realizar
+                            manifestaciones públicas (ej. redes sociales) en nombre de la comunidad.</li>
+                        <li><strong>Circuncisión:</strong> Procedimiento obligatorio para permanecer.</li>
+                        <li><strong>Salida de la comunidad:</strong> Debe presentarlo por escrito ante el Rabino.</li>
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label>20. En nombre propio como me he identificado en mis datos iniciales y en mi calidad de judío
+                        ó en función de serlo, me comprometo a participar como miembro activo de la comunidad, asumiendo
+                        los derechos y responsabilidades que esto implica, acorde con los estatutos y compromisos
+                        previamente descritos. *</label>
+                    <div class="radio-group" style="margin-top: 15px;">
+                        <label class="radio-label"><input type="radio" name="acepta_estatutos" value="Si" required>
+                            Si</label>
+                        <label class="radio-label"><input type="radio" name="acepta_estatutos" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-secondary" onclick="prevStep(6)">⟵ Atrás</button>
                     <button type="button" class="btn-submit" id="submitBtn" onclick="submitForm()">
                         <span class="btn-text">Finalizar Registro</span>
                         <div class="spinner"></div>
@@ -430,7 +628,23 @@
     </div>
 
     <script>
-        const totalSteps = 4;
+        const totalSteps = 6;
+
+        function toggleField(fieldId, show) {
+            const el = document.getElementById(fieldId);
+            if (show) {
+                el.style.display = 'block';
+                const input = el.querySelector('input');
+                if (input) input.setAttribute('required', 'true');
+            } else {
+                el.style.display = 'none';
+                const input = el.querySelector('input');
+                if (input) {
+                    input.removeAttribute('required');
+                    input.value = '';
+                }
+            }
+        }
 
         function validateStep(stepNumber) {
             const step = document.getElementById(`step${stepNumber}`);
@@ -448,25 +662,14 @@
 
         function nextStep(currentStep) {
             if (!validateStep(currentStep)) return;
-
-            // Hide current step
             document.getElementById(`step${currentStep}`).classList.remove('active');
-
-            // Show next step
             document.getElementById(`step${currentStep + 1}`).classList.add('active');
-
-            // Update Progress
             updateProgress(currentStep + 1);
         }
 
         function prevStep(currentStep) {
-            // Hide current step
             document.getElementById(`step${currentStep}`).classList.remove('active');
-
-            // Show prev step
             document.getElementById(`step${currentStep - 1}`).classList.add('active');
-
-            // Update Progress
             updateProgress(currentStep - 1);
         }
 
@@ -477,7 +680,7 @@
         }
 
         async function submitForm() {
-            if (!validateStep(4)) return;
+            if (!validateStep(6)) return;
 
             const btn = document.getElementById('submitBtn');
             const text = btn.querySelector('.btn-text');
@@ -487,28 +690,23 @@
             spinner.style.display = 'block';
             btn.disabled = true;
 
-            // Gather all data
             const form = document.getElementById('onboardingForm');
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
             try {
-                // Here we will eventually send `data` to the N8N webhook POST endpoint
-                // n8n Webhook: https://n8n.hatzolasyisroel.com/webhook/whatsapp-webhook
-                console.log("Form Data Submitted:", data);
-
-                await fetch('https://n8n.hatzolasyisroel.com/webhook/whatsapp-webhook', {
+                // Update with correctly deployed Webhook
+                await fetch('https://n8n.hatzolasyisroel.com/webhook/onboarding-form', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
 
-                // Short delay for visual effect
                 await new Promise(r => setTimeout(r, 800));
                 window.location.href = 'success.html';
             } catch (error) {
                 console.error('Error:', error);
-                alert("Hubo un error al enviar el formulario. Por favor, asegúrese de su conexión e intente de nuevo.");
+                alert("Hubo un error al enviar el formulario. Por favor intente de nuevo.");
 
                 text.style.display = 'block';
                 spinner.style.display = 'none';
