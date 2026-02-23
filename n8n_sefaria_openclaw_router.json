@@ -1,0 +1,188 @@
+{
+    "name": "OpenClaw Rabbi Router & Sefaria Oracle",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "rabbi-inquiry",
+                "options": {}
+            },
+            "id": "webhook-rabbi",
+            "name": "Webhook (Receive Rabbi Inquiry)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "model": "claude-3-opus-20240229",
+                "prompt": "Eres un asistente rabínico (OpenClaw) de Hatzolas Yisroel. Analiza la siguiente consulta y determina si es una pregunta Halájica (requiere Sefaria/Rabino) o una pregunta logística. Consulta: {{ $json.body.message }}",
+                "options": {
+                    "temperature": 0.2
+                }
+            },
+            "id": "openclaw-intent-parser",
+            "name": "OpenClaw Intent Parser (Claude)",
+            "type": "n8n-nodes-base.anthropic",
+            "typeVersion": 1,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "anthropicApi": {
+                    "id": "claude_creds",
+                    "name": "Anthropic API"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{ $json.message.content }}",
+                            "operation": "contains",
+                            "value2": "HALAJA"
+                        }
+                    ]
+                }
+            },
+            "id": "halacha-router",
+            "name": "Is Halachic Question?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                700,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "=https://www.sefaria.org/api/texts/{{ $json.body.topic }}?context=0",
+                "options": {}
+            },
+            "id": "sefaria-api",
+            "name": "Sefaria API (Extract Halacha)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                950,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "=https://graph.facebook.com/v18.0/{{ $env[\"HATZALAH_WABA_PHONE_NUMBER_ID\"] }}/messages",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "=Bearer {{ $env[\"HATZALAH_WABA_ACCESS_TOKEN\"] }}"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $node['Webhook (Receive Rabbi Inquiry)'].json.body.phone }}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"📜 Textos de Sefaria encontrados: {{ $json.text[0] }}\\n\\nEsta consulta ha sido escalada al Rabino para una respuesta final.\"\n  }\n}",
+                "options": {}
+            },
+            "id": "whatsapp-sefaria-response",
+            "name": "WhatsApp (Sefaria Response)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1200,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "=https://graph.facebook.com/v18.0/{{ $env[\"HATZALAH_WABA_PHONE_NUMBER_ID\"] }}/messages",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "=Bearer {{ $env[\"HATZALAH_WABA_ACCESS_TOKEN\"] }}"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $node['Webhook (Receive Rabbi Inquiry)'].json.body.phone }}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"✅ Tu consulta logística ha sido recibida y será atendida por la administración de Hatzolas Yisroel pronto.\"\n  }\n}",
+                "options": {}
+            },
+            "id": "whatsapp-logistic-response",
+            "name": "WhatsApp (Logistic Response)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                950,
+                400
+            ]
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "Webhook (Receive Rabbi Inquiry)": {
+            "main": [
+                [
+                    {
+                        "node": "OpenClaw Intent Parser (Claude)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "OpenClaw Intent Parser (Claude)": {
+            "main": [
+                [
+                    {
+                        "node": "Is Halachic Question?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Is Halachic Question?": {
+            "main": [
+                [
+                    {
+                        "node": "Sefaria API (Extract Halacha)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "WhatsApp (Logistic Response)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Sefaria API (Extract Halacha)": {
+            "main": [
+                [
+                    {
+                        "node": "WhatsApp (Sefaria Response)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {}
+}
