@@ -5,20 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro | Comunidad Hatzolas Yisroel</title>
+    <!-- Use Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a365d;
-            --secondary: #2b6cb0;
-            --accent: #ed8936;
-            --background: #f7fafc;
+            /* Hatzalah Core Colors */
+            --primary: #003366;
+            /* Deep Navy Blue */
+            --secondary: #cc0000;
+            /* Hatzalah Red */
+            --background: #f4f6f9;
             --surface: #ffffff;
             --text-main: #2d3748;
             --text-light: #718096;
+            --border: #e2e8f0;
             --error: #e53e3e;
+            --success: #38a169;
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--background);
             color: var(--text-main);
             margin: 0;
@@ -32,21 +38,24 @@
         .container {
             background-color: var(--surface);
             padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             width: 100%;
-            max-width: 450px;
+            max-width: 550px;
             margin: 20px;
         }
 
         .header {
             text-align: center;
             margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
         }
 
         .header h1 {
             color: var(--primary);
             font-size: 1.8rem;
+            font-weight: 700;
             margin: 0 0 0.5rem 0;
         }
 
@@ -54,6 +63,62 @@
             color: var(--text-light);
             margin: 0;
             font-size: 0.95rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background-color: var(--border);
+            border-radius: 8px;
+            height: 8px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 25%;
+            /* Start at 25% for 4 steps */
+            transition: width 0.3s ease;
+        }
+
+        .step-indicator {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: -1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        /* Form Steps */
+        .form-step {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-title {
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
         }
 
         .form-group {
@@ -72,43 +137,85 @@
         select {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
             font-size: 1rem;
+            font-family: inherit;
             transition: all 0.2s ease;
             box-sizing: border-box;
+            background-color: #fdfdfd;
         }
 
         input:focus,
         select:focus {
             outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .radio-label input {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 0.85rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
         }
 
         .btn-primary {
             background-color: var(--primary);
             color: white;
-            border: none;
-            padding: 1rem;
-            width: 100%;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            margin-top: 1rem;
+            flex-grow: 1;
         }
 
         .btn-primary:hover {
-            background-color: var(--secondary);
+            background-color: #002244;
         }
 
-        .error-message {
-            color: var(--error);
-            font-size: 0.85rem;
-            margin-top: 0.25rem;
-            display: none;
+        .btn-secondary {
+            background-color: white;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f1f5f9;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary);
+            color: white;
+            flex-grow: 1;
+        }
+
+        .btn-submit:hover {
+            background-color: #990000;
         }
 
         /* Loading animation */
@@ -119,7 +226,7 @@
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 1s linear infinite;
             margin: 0 auto;
         }
 
@@ -135,86 +242,274 @@
 
     <div class="container">
         <div class="header">
-            <h1>Únete a la Comunidad</h1>
-            <p>Hatzolas Yisroel • Registro Oficial</p>
+            <h1>Registro Comunitario</h1>
+            <p>Hatzolas Yisroel • Formulario Oficial</p>
         </div>
 
-        <!-- The form points to the N8N webhook we will deploy when access is restored -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="step-indicator" id="stepIndicator">Paso 1 de 4</div>
+
+        <!-- The form -->
         <form id="onboardingForm">
-            <div class="form-group">
-                <label for="first_name">Nombre *</label>
-                <input type="text" id="first_name" name="first_name" required>
+
+            <!-- STEP 1: Identificación y Contacto -->
+            <div class="form-step active" id="step1">
+                <div class="step-title">1. Identificación y Contacto</div>
+
+                <div class="form-group">
+                    <label for="fullName">Nombre Completo *</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Nombres y Apellidos completos"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="idNumber">Número de Identificación (C.C. / Pasaporte) *</label>
+                    <input type="text" id="idNumber" name="idNumber" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthDate">Fecha de Nacimiento *</label>
+                    <input type="date" id="birthDate" name="birthDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Número de Teléfono / WhatsApp *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+57 300 000 0000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Dirección de correo electrónico *</label>
+                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                </div>
+
+                <div class="btn-group" style="justify-content: flex-end;">
+                    <button type="button" class="btn-primary" onclick="nextStep(1)">Siguiente ➞</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="last_name">Apellido *</label>
-                <input type="text" id="last_name" name="last_name" required>
+            <!-- STEP 2: Residencia y Demografía -->
+            <div class="form-step" id="step2">
+                <div class="step-title">2. Residencia y Demografía</div>
+
+                <div class="form-group">
+                    <label for="address">Dirección de Residencia Actual *</label>
+                    <input type="text" id="address" name="address" placeholder="Ej. Calle 123 # 45-67 apt 101" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="neighborhood">Barrio / Localidad *</label>
+                    <input type="text" id="neighborhood" name="neighborhood" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="civilStatus">Estado Civil *</label>
+                    <select id="civilStatus" name="civilStatus" required>
+                        <option value="" disabled selected>Seleccione...</option>
+                        <option value="Soltero/a">Soltero/a</option>
+                        <option value="Casado/a">Casado/a</option>
+                        <option value="Viudo/a">Viudo/a</option>
+                        <option value="Divorciado/a">Divorciado/a</option>
+                        <option value="Unión Libre">Unión Libre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="housingType">Tipo de Vivienda Actual *</label>
+                    <select id="housingType" name="housingType" required>
+                        <option value="" disabled selected>Seleccione...</option>
+                        <option value="Propia">Propia</option>
+                        <option value="Arrendada">Arrendada</option>
+                        <option value="Familiar">Familiar (Vive con familiares)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="estrato">Estrato *</label>
+                    <select id="estrato" name="estrato" required>
+                        <option value="" disabled selected>Seleccione...</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-secondary" onclick="prevStep(2)">⟵ Atrás</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(2)">Siguiente ➞</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="whatsapp">WhatsApp / Teléfono *</label>
-                <input type="tel" id="whatsapp" name="whatsapp_number" placeholder="+57 300 000 0000" required>
+            <!-- STEP 3: Información Médica y Emergencias -->
+            <div class="form-step" id="step3">
+                <div class="step-title">3. Médica y Emergencia</div>
+
+                <div class="form-group">
+                    <label>¿Tiene alguna condición médica que debamos conocer? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="hasMedicalCondition" value="Si" required>
+                            Sí</label>
+                        <label class="radio-label"><input type="radio" name="hasMedicalCondition" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="medicalDetails">Si respondió sí, especifique la condición médica</label>
+                    <input type="text" id="medicalDetails" name="medicalDetails"
+                        placeholder="Ej. Alergia a medicamentos, asma, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="eps">EPS / Sistema de Salud</label>
+                    <input type="text" id="eps" name="eps" placeholder="Nombre de su entidad de salud">
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 1.5rem 0;">
+
+                <div class="form-group">
+                    <label for="emergencyName">Nombre del Contacto de Emergencia *</label>
+                    <input type="text" id="emergencyName" name="emergencyName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="emergencyPhone">Teléfono del Contacto de Emergencia *</label>
+                    <input type="tel" id="emergencyPhone" name="emergencyPhone" required>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-secondary" onclick="prevStep(3)">⟵ Atrás</button>
+                    <button type="button" class="btn-primary" onclick="nextStep(3)">Siguiente ➞</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="role">Rol en la Comunidad *</label>
-                <select id="role" name="role" required>
-                    <option value="" disabled selected>Selecciona tu rol...</option>
-                    <option value="Soy miembro">Soy miembro</option>
-                    <option value="Soy visitante">Soy visitante</option>
-                    <option value="Mi familia quiere unirse">Mi familia quiere unirse</option>
-                </select>
+            <!-- STEP 4: Ocupación y Confirmación -->
+            <div class="form-step" id="step4">
+                <div class="step-title">4. Ocupación y Finalización</div>
+
+                <div class="form-group">
+                    <label for="occupation">Ocupación o Profesión *</label>
+                    <input type="text" id="occupation" name="occupation" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Empresa o Lugar de Trabajo</label>
+                    <input type="text" id="company" name="company">
+                </div>
+
+                <div class="form-group">
+                    <label for="children">Número de hijos</label>
+                    <input type="number" id="children" name="children" min="0" placeholder="0">
+                </div>
+
+                <div
+                    style="background-color: #ebf8ff; border: 1px solid #bee3f8; padding: 1rem; border-radius: 6px; margin-top: 1.5rem; font-size: 0.85rem; color: #2c5282;">
+                    <strong>Privacidad de Datos:</strong> Al enviar este formulario, usted autoriza a la congregación
+                    Hatzolas Yisroel para el almacenamiento y trato confidencial de su información con fines
+                    estrictamente comunitarios y de contacto.
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-secondary" onclick="prevStep(4)">⟵ Atrás</button>
+                    <button type="button" class="btn-submit" id="submitBtn" onclick="submitForm()">
+                        <span class="btn-text">Finalizar Registro</span>
+                        <div class="spinner"></div>
+                    </button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="family_size">Tamaño de Familia</label>
-                <input type="number" id="family_size" name="family_size" min="1" placeholder="Ej. 4">
-            </div>
-
-            <button type="submit" class="btn-primary" id="submitBtn">
-                <span class="btn-text">Completar Registro</span>
-                <div class="spinner"></div>
-            </button>
         </form>
     </div>
 
     <script>
-        document.getElementById('onboardingForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        const totalSteps = 4;
+
+        function validateStep(stepNumber) {
+            const step = document.getElementById(`step${stepNumber}`);
+            const inputs = step.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    input.reportValidity();
+                    isValid = false;
+                }
+            });
+            return isValid;
+        }
+
+        function nextStep(currentStep) {
+            if (!validateStep(currentStep)) return;
+
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+
+            // Show next step
+            document.getElementById(`step${currentStep + 1}`).classList.add('active');
+
+            // Update Progress
+            updateProgress(currentStep + 1);
+        }
+
+        function prevStep(currentStep) {
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+
+            // Show prev step
+            document.getElementById(`step${currentStep - 1}`).classList.add('active');
+
+            // Update Progress
+            updateProgress(currentStep - 1);
+        }
+
+        function updateProgress(stepNumber) {
+            const percentage = (stepNumber / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('stepIndicator').innerText = `Paso ${stepNumber} de ${totalSteps}`;
+        }
+
+        async function submitForm() {
+            if (!validateStep(4)) return;
 
             const btn = document.getElementById('submitBtn');
             const text = btn.querySelector('.btn-text');
             const spinner = btn.querySelector('.spinner');
 
-            // Show loading state
             text.style.display = 'none';
             spinner.style.display = 'block';
             btn.disabled = true;
 
-            const formData = {
-                first_name: document.getElementById('first_name').value,
-                last_name: document.getElementById('last_name').value,
-                whatsapp_number: document.getElementById('whatsapp').value,
-                role: document.getElementById('role').value,
-                family_size: document.getElementById('family_size').value || 1
-            };
+            // Gather all data
+            const form = document.getElementById('onboardingForm');
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
 
             try {
-                // This URL will be replaced with our live N8N webhook
-                console.log("Sending data to Webhook:", formData);
-                // Simulate network request
-                await new Promise(r => setTimeout(r, 1500));
+                // Here we will eventually send `data` to the N8N webhook POST endpoint
+                // n8n Webhook: https://n8n.hatzolasyisroel.com/webhook/whatsapp-webhook
+                console.log("Form Data Submitted:", data);
+
+                await fetch('https://n8n.hatzolasyisroel.com/webhook/whatsapp-webhook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                // Short delay for visual effect
+                await new Promise(r => setTimeout(r, 800));
                 window.location.href = 'success.html';
             } catch (error) {
                 console.error('Error:', error);
-                alert("Hubo un error al enviar el formulario. Por favor, intenta de nuevo.");
+                alert("Hubo un error al enviar el formulario. Por favor, asegúrese de su conexión e intente de nuevo.");
 
-                // Reset button
                 text.style.display = 'block';
                 spinner.style.display = 'none';
                 btn.disabled = false;
             }
-        });
+        }
     </script>
 
 </body>
