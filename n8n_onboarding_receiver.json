@@ -1,0 +1,123 @@
+{
+    "name": "Onboarding Form Receiver (Webhook + Email)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "onboarding-form",
+                "options": {}
+            },
+            "id": "webhook-onboarding",
+            "name": "Webhook (Receive Onboarding Data)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "insert",
+                "schema": "public",
+                "table": "community_members",
+                "columns": "nombre_completo, identificacion, telefono, email, fecha_nacimiento, direccion, pais, estado_civil, cantidad_hijos, personas_cargo, tipo_vivienda, estrato, profesion, talentos",
+                "options": {}
+            },
+            "id": "supabase-insert",
+            "name": "Supabase - Save Member Record",
+            "type": "n8n-nodes-base.supabase",
+            "typeVersion": 1,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "supabaseApi": {
+                    "id": "supabase_credentials",
+                    "name": "Supabase API"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "sendTo": "={{ $node['Webhook (Receive Onboarding Data)'].json.body.email }}",
+                "subject": "¡Bienvenido a Hatzolas Yisroel! Confirmación de Registro",
+                "message": "=Shalom {{ $node['Webhook (Receive Onboarding Data)'].json.body.nombre_completo }},\n\nHemos recibido exitosamente tu solicitud de ingreso a la Comunidad Kehilah Hatzolat Israel. \n\nAgradecemos tu interés y compromiso. Nuestro comité administrativo y el Rabino revisarán tu perfil y nos pondremos en contacto contigo próximamente mediante este correo o al teléfono {{ $node['Webhook (Receive Onboarding Data)'].json.body.telefono }} para darte indicaciones sobre los siguientes pasos.\n\nRecuerda que como parte del proceso, la evaluación de la membresía depende de la asistencia constante a los rezos, clases y participación activa en la comunidad.\n\nBendiciones,\n\nComité Administrativo\nHatzolas Yisroel",
+                "options": {
+                    "appendAttribution": false
+                }
+            },
+            "id": "gmail-send-user",
+            "name": "Gmail - Send Welcome Email to User",
+            "type": "n8n-nodes-base.gmail",
+            "typeVersion": 2,
+            "position": [
+                700,
+                200
+            ],
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "gmail_credentials",
+                    "name": "Gmail Account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "sendTo": "hatzolasyisroel613@gmail.com",
+                "subject": "=NUEVA SOLICITUD DE INGRESO: {{ $node['Webhook (Receive Onboarding Data)'].json.body.nombre_completo }}",
+                "message": "=Se ha recibido una nueva solicitud de ingreso en la web.\n\n**DATOS PRINCIPALES:**\n- Nombre: {{ $node['Webhook (Receive Onboarding Data)'].json.body.nombre_completo }}\n- Identificación: {{ $node['Webhook (Receive Onboarding Data)'].json.body.identificacion }}\n- Correo: {{ $node['Webhook (Receive Onboarding Data)'].json.body.email }}\n- Teléfono: {{ $node['Webhook (Receive Onboarding Data)'].json.body.telefono }}\n- Profesión: {{ $node['Webhook (Receive Onboarding Data)'].json.body.profesion }}\n- Talentos: {{ $node['Webhook (Receive Onboarding Data)'].json.body.talentos }}\n\nPor favor revise la base de datos de Supabase para ver el perfil completo.",
+                "options": {
+                    "appendAttribution": false
+                }
+            },
+            "id": "gmail-send-admin",
+            "name": "Gmail - Notify Admin",
+            "type": "n8n-nodes-base.gmail",
+            "typeVersion": 2,
+            "position": [
+                700,
+                400
+            ],
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "gmail_credentials",
+                    "name": "Gmail Account"
+                }
+            }
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "Webhook (Receive Onboarding Data)": {
+            "main": [
+                [
+                    {
+                        "node": "Supabase - Save Member Record",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Supabase - Save Member Record": {
+            "main": [
+                [
+                    {
+                        "node": "Gmail - Send Welcome Email to User",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Gmail - Notify Admin",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {}
+}
