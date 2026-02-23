@@ -1,0 +1,133 @@
+{
+    "name": "Mikveh Calendar Automation (Google Calendar + Supabase)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "mikveh-booking",
+                "options": {}
+            },
+            "id": "webhook-mikveh",
+            "name": "Webhook (Receive Mikveh Booking)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "create",
+                "calendar": "={{ $json.body.calendar_id || 'primary' }}",
+                "title": "=Reserva Mikve: {{ $json.body.name }}",
+                "description": "=Teléfono: {{ $json.body.phone }}",
+                "start": "={{ $json.body.start_time }}",
+                "end": "={{ $json.body.end_time }}",
+                "options": {}
+            },
+            "id": "google-calendar-insert",
+            "name": "Google Calendar - Create Event",
+            "type": "n8n-nodes-base.googleCalendar",
+            "typeVersion": 1,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "googleApi": {
+                    "id": "google_calendar_credentials",
+                    "name": "Service Account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "operation": "upsert",
+                "schema": "public",
+                "table": "mikveh_bookings",
+                "columns": "name, phone, start_time, end_time, status, google_event_id",
+                "options": {}
+            },
+            "id": "supabase-upsert",
+            "name": "Supabase - Save Booking",
+            "type": "n8n-nodes-base.supabase",
+            "typeVersion": 1,
+            "position": [
+                700,
+                300
+            ],
+            "credentials": {
+                "supabaseApi": {
+                    "id": "supabase_credentials",
+                    "name": "Supabase API"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "=https://graph.facebook.com/v18.0/{{ $env[\"HATZALAH_WABA_PHONE_NUMBER_ID\"] }}/messages",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "=Bearer {{ $env[\"HATZALAH_WABA_ACCESS_TOKEN\"] }}"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $json.phone }}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"✅ ¡Tu reserva para la Mikve ha sido confirmada con éxito para el {{ $json.start_time }}!\"\n  }\n}",
+                "options": {}
+            },
+            "id": "whatsapp-confirm",
+            "name": "WhatsApp - Send Confirmation",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                950,
+                300
+            ]
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "Webhook (Receive Mikveh Booking)": {
+            "main": [
+                [
+                    {
+                        "node": "Google Calendar - Create Event",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Google Calendar - Create Event": {
+            "main": [
+                [
+                    {
+                        "node": "Supabase - Save Booking",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Supabase - Save Booking": {
+            "main": [
+                [
+                    {
+                        "node": "WhatsApp - Send Confirmation",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {}
+}
